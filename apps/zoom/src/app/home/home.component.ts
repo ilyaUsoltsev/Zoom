@@ -17,4 +17,8 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  startSearch() {
+    console.log(this.searchField, this.selectedTime);
+  }
 }

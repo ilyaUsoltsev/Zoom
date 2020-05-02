@@ -3,8 +3,8 @@
     <form>
       <h1>Найти вебинар</h1>
       <mat-form-field>
-        <mat-label>По ключевым словам</mat-label>
-        <input matInput value="" [(ngModel)]="searchField" />
+        <mat-label>Вы ищете</mat-label>
+        <input matInput value="" [(ngModel)]="searchField" name="searchField" />
       </mat-form-field>
       <h3>Когда</h3>
       <mat-form-field>
@@ -14,6 +14,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <br />
+      <button (click)="startSearch()" mat-raised-button color="basic">
+        Искать
+      </button>
     </form>
   </div>
 </div>
