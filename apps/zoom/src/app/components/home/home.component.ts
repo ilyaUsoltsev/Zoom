@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TIME_FOR_SEARCH } from '../_const/constants';
+import { TIME_FOR_SEARCH } from '../../_const/constants';
 
 @Component({
   selector: 'zoom-home',
