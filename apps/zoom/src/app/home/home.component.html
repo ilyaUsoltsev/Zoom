@@ -1,0 +1,19 @@
+<div class="cover">
+  <div class="category-form">
+    <form>
+      <h1>Найти вебинар</h1>
+      <mat-form-field>
+        <mat-label>По ключевым словам</mat-label>
+        <input matInput value="" [(ngModel)]="searchField" />
+      </mat-form-field>
+      <h3>Когда</h3>
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedTime" name="selectedTime">
+          <mat-option *ngFor="let time of timeOptions" [value]="time">
+            {{ time }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
