@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "projects": {
+    "zoom": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/zoom",
+      "sourceRoot": "apps/zoom/src",
+      "prefix": "zoom",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/zoom",
+            "index": "apps/zoom/src/index.html",
+            "main": "apps/zoom/src/main.ts",
+            "polyfills": "apps/zoom/src/polyfills.ts",
+            "tsConfig": "apps/zoom/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/zoom/src/favicon.ico", "apps/zoom/src/assets"],
+            "styles": ["apps/zoom/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/zoom/src/environments/environment.ts",
+                  "with": "apps/zoom/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "zoom:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "zoom:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "zoom:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/zoom/tsconfig.app.json",
+              "apps/zoom/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/zoom/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/zoom/jest.config.js",
+            "tsConfig": "apps/zoom/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/zoom/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "zoom-e2e": {
+      "root": "apps/zoom-e2e",
+      "sourceRoot": "apps/zoom-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/zoom-e2e/cypress.json",
+            "tsConfig": "apps/zoom-e2e/tsconfig.e2e.json",
+            "devServerTarget": "zoom:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "zoom:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/zoom-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/zoom-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "zoom"
+}
