@@ -1,1 +1,11 @@
-<zoom-home></zoom-home>
+<mat-sidenav-container>
+  <mat-sidenav [opened]="false" #sidenav role="navigation">
+    <zoom-sidenav (closeSidenav)="sidenav.close()"></zoom-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <main>
+      <mat-icon (click)="sidenav.open()" class="menu-icon">menu</mat-icon>
+      <zoom-home></zoom-home>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
