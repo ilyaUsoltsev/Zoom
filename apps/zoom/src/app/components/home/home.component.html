@@ -6,14 +6,7 @@
         <mat-label>Вы ищете</mat-label>
         <input matInput value="" [(ngModel)]="searchField" name="searchField" />
       </mat-form-field>
-      <h3>Когда</h3>
-      <mat-form-field>
-        <mat-select [(ngModel)]="selectedTime" name="selectedTime">
-          <mat-option *ngFor="let time of timeOptions" [value]="time">
-            {{ time }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
       <br />
       <button (click)="startSearch()" mat-raised-button color="basic">
         Искать

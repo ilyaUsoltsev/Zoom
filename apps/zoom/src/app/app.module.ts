@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +23,7 @@ import { entityConfig } from './entity-metadata';
 import { HttpClientModule } from '@angular/common/http';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { defaultDataServiceConfig } from './_const/defaultDataServiceConfig';
+import { appRoutes } from './router';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { defaultDataServiceConfig } from './_const/defaultDataServiceConfig';
       logOnly: environment.production
     }),
     EffectsModule.forRoot([]),
+    RouterModule.forRoot(appRoutes),
     EntityDataModule.forRoot(entityConfig),
     StoreModule.forRoot(
       {},

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TIME_FOR_SEARCH } from '../../_const/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'zoom-home',
@@ -7,18 +7,13 @@ import { TIME_FOR_SEARCH } from '../../_const/constants';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  timeOptions: TIME_FOR_SEARCH[] = [
-    TIME_FOR_SEARCH.NOW,
-    TIME_FOR_SEARCH.TODAY,
-    TIME_FOR_SEARCH.ANY
-  ];
   searchField: string;
-  selectedTime: string = TIME_FOR_SEARCH.ANY;
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   startSearch() {
-    console.log(this.searchField, this.selectedTime);
+    this.searchField = this.searchField ? this.searchField.trim() : '';
+    this.router.navigateByUrl('lectures/' + this.searchField);
   }
 }
