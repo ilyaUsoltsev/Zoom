@@ -7,11 +7,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
 @NgModule({
   declarations: [],
   imports: [
     MatCardModule,
+    MatRadioModule,
     MatSelectModule,
     MatIconModule,
     MatInputModule,
@@ -22,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
   ],
   exports: [
     MatCardModule,
+    MatRadioModule,
     MatSelectModule,
     MatIconModule,
     MatInputModule,
@@ -29,6 +32,7 @@ import { MatCardModule } from '@angular/material/card';
     MatSidenavModule,
     MatButtonModule,
     MatListModule
-  ]
+  ],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }]
 })
 export class MaterialModule {}

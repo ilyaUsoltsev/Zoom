@@ -3,43 +3,31 @@
     <mat-icon>search</mat-icon>
     <span class="icon-title">Поиск</span>
   </a>
-  <a mat-list-item routerLink="/lectures/now" (click)="onClose()">
-    <mat-icon>alarm</mat-icon>
-    <span class="icon-title">Сейчас</span>
-  </a>
-  <a mat-list-item routerLink="/lectures/top" (click)="onClose()">
-    <mat-icon>thumb_up</mat-icon>
-    <span class="icon-title">В топе</span>
-  </a>
   <a mat-list-item routerLink="/lectures" (click)="onClose()">
     <mat-icon>all_inbox</mat-icon>
     <span class="icon-title">Все лекции</span>
   </a>
 
-  <a mat-list-item routerLink="/tasks" (click)="onClose()">
+  <a
+    mat-list-item
+    routerLink="/create"
+    *ngIf="user$ | async"
+    (click)="onClose()"
+  >
     <mat-icon>add</mat-icon>
     <span class="icon-title">Создать</span>
   </a>
-  <!-- <a
-      mat-list-item
-      routerLink="/signup"
-      (click)="onClose()"
-      *ngIf="!(isAuth | async)"
-    >
-      <mat-icon>face</mat-icon>
-      <span class="icon-title">Регистрация</span>
-    </a>
-    <a
-      mat-list-item
-      routerLink="/login"
-      (click)="onClose()"
-      *ngIf="!(isAuth | async)"
-    >
-      <mat-icon>input</mat-icon>
-      <span class="icon-title">Войти</span>
-    </a>
-    <a mat-list-item (click)="onLogout()" *ngIf="isAuth | async">
-      <mat-icon>eject</mat-icon>
-      <span class="icon-title">Выйти</span>
-    </a> -->
+  <a
+    mat-list-item
+    routerLink="/login"
+    (click)="onClose()"
+    *ngIf="!(user$ | async)"
+  >
+    <mat-icon>input</mat-icon>
+    <span class="icon-title">Войти</span>
+  </a>
+  <a mat-list-item (click)="onLogout()" *ngIf="user$ | async">
+    <mat-icon>eject</mat-icon>
+    <span class="icon-title">Выйти</span>
+  </a>
 </mat-nav-list>

@@ -1,19 +1,41 @@
-<h1 class="title">Все лекции</h1>
+<h1 class="title">Все вебинары</h1>
 <div class="wrap">
   <mat-card class="lecture-card" *ngFor="let lecture of lectures$ | async">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{ lecture.title }}</mat-card-title>
-      <mat-card-subtitle>{{ lecture.category.name }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ lecture?.user?.username }}</mat-card-subtitle>
+      <div mat-card-avatar class="header-image">
+        <img [src]="lecture?.user?.imgUrl" alt="" />
+      </div>
     </mat-card-header>
     <mat-card-content>
+      <h1>{{ lecture.title }}</h1>
+      <h3>
+        {{ lecture.platform }} {{ lecture.time | date: 'HH:mm dd/MM/yyyy' }}
+      </h3>
       <p>
         {{ lecture.description }}
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
+      <button mat-raised-button color="basic" (click)="goToLink(lecture.link)">
+        Перейти по ссылке
+      </button>
     </mat-card-actions>
   </mat-card>
+</div>
+<div
+  class="more"
+  *ngIf="(lectures$ | async).length === itemsPerPage * (page + 1)"
+>
+  <button mat-raised-button color="primary" (click)="nextPage()">
+    Еще
+  </button>
+</div>
+<div class="nothing" *ngIf="(lectures$ | async).length === 0">
+  <p>Ничего не найдено...</p>
+</div>
+<div class="nothing" *ngIf="(lectures$ | async).length === 0">
+  <a routerLink="/" mat-raised-button color="primary">
+    Поиск
+  </a>
 </div>

@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LectureService } from '../../_services/lecture.service';
-import { tap } from 'rxjs/operators';
+import { tap, map, distinctUntilChanged } from 'rxjs/operators';
 import { Lecture } from '../../_services/lecture';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,15 +12,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LecturesComponent implements OnInit {
   page = 0;
+  pageCount = 0;
+  searchText = '';
+  itemsPerPage = 4;
+  initialLoad = true;
   lectures$: Observable<Lecture[]>;
-  searchText: string;
-  // @HostListener('window:scroll', ['$event'])
-  // onScroll(event: any) {
-  //   if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-  //     this.page += 1;
-  //     this.loadComments();
-  //   }
-  // }
 
   constructor(
     private lectureService: LectureService,
@@ -28,23 +24,35 @@ export class LecturesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.router.paramMap.subscribe(searchParam => {
-      this.searchText = (searchParam as any).params.search;
+    this.router.queryParams.pipe(distinctUntilChanged()).subscribe(params => {
+      this.lectureService.clearCache();
+      this.searchText = params.search;
+      this.pageCount = 0;
+      this.page = 0;
+      this.loadLectures();
     });
     this.lectures$ = this.lectureService.entities$.pipe(
-      tap(() => {
-        if (this.page === 0) {
-          this.loadComments();
-        }
+      map(entities => {
+        this.pageCount = entities.length;
+        return entities;
       })
     );
   }
+  getFirstBatch() {}
+  nextPage() {
+    this.page += 1;
+    this.loadLectures();
+  }
+  loadLectures() {
+    const queryObject = this.searchText ? { _q: this.searchText } : {};
+    this.lectureService.getWithQuery({
+      ...queryObject,
+      _limit: '' + this.itemsPerPage,
+      _start: (this.itemsPerPage * this.page).toString()
+    });
+  }
 
-  loadComments() {
-    if (this.searchText) {
-      this.lectureService.getWithQuery({ _limit: '4', _q: this.searchText });
-    } else {
-      this.lectureService.getWithQuery({ _limit: '4' });
-    }
+  goToLink(link: string) {
+    window.open(link);
   }
 }

@@ -13,7 +13,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   startSearch() {
-    this.searchField = this.searchField ? this.searchField.trim() : '';
-    this.router.navigateByUrl('lectures/' + this.searchField);
+    this.searchField = this.searchField
+      ? this.searchField.trim().toLowerCase()
+      : '';
+    this.router.navigateByUrl(`/lectures?search=${this.searchField}`);
   }
 }

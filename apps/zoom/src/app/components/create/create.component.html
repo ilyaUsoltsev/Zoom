@@ -1,1 +1,62 @@
-<p>create works!</p>
+<div class="cover">
+  <div class="category-form">
+    <form #f="ngForm" (ngSubmit)="createLecture(f)">
+      <h1 class="main-title">Добавить вебинар</h1>
+      <mat-form-field>
+        <mat-label>Название лекции</mat-label>
+        <input matInput ngModel name="title" required />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Описание</mat-label>
+        <textarea
+          type="text"
+          matInput
+          rows="3"
+          ngModel
+          name="description"
+        ></textarea>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Ключевые слова</mat-label>
+        <input matInput ngModel name="keywords" />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Platform</mat-label>
+        <mat-select ngModel name="platform" required>
+          <mat-option *ngFor="let platform of platforms" [value]="platform">
+            {{ platform }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Дата и время</mat-label>
+        <input
+          ngModel
+          matInput
+          required
+          name="time"
+          type="datetime-local"
+          placeholder="start date"
+        />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Ссылка на лекцию</mat-label>
+        <textarea matInput ngModel name="link" rows="3" required></textarea>
+      </mat-form-field>
+      <br />
+      <button
+        type="submit"
+        [disabled]="!f.valid"
+        mat-raised-button
+        color="basic"
+      >
+        Добавить
+      </button>
+    </form>
+  </div>
+</div>

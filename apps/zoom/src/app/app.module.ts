@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { JwtModule } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
@@ -20,10 +20,16 @@ import {
   DefaultDataServiceConfig
 } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { defaultDataServiceConfig } from './_const/defaultDataServiceConfig';
 import { appRoutes } from './router';
+import { ConnectComponent } from './components/connect/connect.component';
+import { AuthInterceptor } from './_interceptors/auth.interceptor';
+
+export function tokenGetter() {
+  return JSON.parse(localStorage.getItem('token'));
+}
 
 @NgModule({
   declarations: [
@@ -32,7 +38,8 @@ import { appRoutes } from './router';
     LoginComponent,
     CreateComponent,
     LecturesComponent,
-    SidenavComponent
+    SidenavComponent,
+    ConnectComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +47,9 @@ import { appRoutes } from './router';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    JwtModule.forRoot({
+      config: { tokenGetter }
+    }),
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -62,6 +72,7 @@ import { appRoutes } from './router';
   ],
   providers: [
     EntityDataService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig }
   ],
   bootstrap: [AppComponent]
